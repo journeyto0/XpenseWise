@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Expense Wisely </title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 18px;
+        background: linear-gradient(to bottom, #020111, #191621);
+        min-height: 100vh;
+        margin: 0;
+        animation: glow 7s infinite alternate;
+    }
+
+    @keyframes glow {
+        from {
+            box-shadow: 0 0 10px #00c7ff, 0 0 20px #00c7ff, 0 0 30px #00c7ff, 0 0 40px #00c7ff, 0 0 70px #00c7ff, 0 0 80px #00c7ff, 0 0 100px #00c7ff, 0 0 150px #00c7ff;
+        }
+
+        to {
+            box-shadow: 0 0 20px #00c7ff, 0 0 30px #00c7ff, 0 0 40px #00c7ff, 0 0 50px #00c7ff, 0 0 80px #00c7ff, 0 0 90px #00c7ff, 0 0 110px #00c7ff, 0 0 140px #00c7ff;
+        }
+    }
+
+    h1 {
+        font-size: 48px;
+        color:#00b0ff; 
+        margin-bottom: 50px;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 800px;
+    }
+
+    .section {
+        width: 45%;
+        border: 1px solid #00c7ff;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #111424;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        overflow: hidden;
+        margin: 20px;
+    }
+
+    .section:hover {
+        transform: translateY(-5px);
+    }
+
+    h2 {
+        font-size: 32px;
+        color:aliceblue; 
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .categories {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #f0f8ff; 
+    }
+
+    input[type="number"],
+    select {
+        width: calc(100% - 22px);
+        height: 40px;
+        border: 1px solid #1d1f2f;
+        border-radius: 5px;
+        padding: 10px;
+        box-sizing: border-box;
+        font-size: 18px;
+        margin-bottom: 10px;
+        background-color: #192338;
+        color: #f0f8ff; 
+    }
+
+    button {
+        width: calc(100% - 25px);
+        height: 40px;
+        background-color: #00c7ff; 
+        border: none;
+        border-radius: 5px;
+        color: #f0f8ff; 
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        margin-bottom: 10px;
+    }
+
+    button:hover {
+        background-color: #00b0ff; 
+        transform: scale(1.05);
+    }
+
+    .expenses-list {
+        max-height: 200px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .expenses-list li {
+        padding: 5px 0;
+        color: #f0f8ff; 
+    }
+
+    .totals {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+        font-size: 24px;
+        color: #f0f8ff; 
+    }
+
+    .totals span {
+        font-weight: bold;
+    }
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .loading::after {
+        content: 'Thank You';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #066cc6; 
+        font-size: 18px;
+        opacity: 0;
+        animation: fadeInOut 3s linear forwards;
+
+    }
+    .previous-transactions {
+
+            width:fit-content;
+            max-width:max-content;
+            border: 0px solid #00b0ff;
+            border-radius: 22px;
+            padding: 30px;
+            background-color: #05101a;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 182, 255, 0.3);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .previous-transactions h2 {
+            font-size: 27px;
+            color: #f0f8ff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .transaction-list {
+            display: flex;
+            justify-content:space-between;
+        }
+
+        .transaction-list ul {
+            width:fit-content;
+            list-style-type: none;
+            padding:0%;
+        }
+
+        .transaction-list h3 {
+            color:#00b0ff;
+            font-size: 19px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 0;
+        }
+        .transaction-list li {
+            color: #f0f8ff;
+            padding: 9px;
+        }
+        
+         /* Welcome ,Exit animation */
+         .welcome-message{
+            position: fixed;
+            top: 130px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight:lighter;
+            color: #00c7ff;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s ease-in;
+        }
+
+        /* Blinking Animation (Finite duration) */
+        .blink {
+            animation:blink 1.8s;
+        }
+
+        @keyframes blink {
+            60% {
+                opacity:5;
+            }
+        }
+
+        @keyframes glowing {
+            20% {
+                box-shadow: 0 0 10px #00c7ff, 0 0 20px #00c7ff, 0 0 30px #00c7ff, 0 0 40px #00c7ff, 0 0 70px #00c7ff, 0 0 80px #00c7ff, 0 0 100px #00c7ff, 0 0 150px #00c7ff;
+            }
+            50% {
+                box-shadow: 0 0 20px #00c7ff, 0 0 30px #00c7ff, 0 0 40px #00c7ff, 0 0 50px #00c7ff, 0 0 80px #00c7ff, 0 0 90px #00c7ff, 0 0 110px #00c7ff, 0 0 140px #00c7ff;
+            }
+        }
+        .exit-message {
+            position:relative;
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight:lighter;
+            color: #00b3ff;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 3s ease-out;
+        }
+
+</style>
+</head>
+<body>
+    <h1 class="heading">EXPENSE TRACKER</h1>
+     <!-- Welcome Message -->
+      
+     <div class="welcome-message blink">Welcome to Xpense Wise🙂</div>
+    <div class="container">
+        <div class="section">
+            <h2>Income</h2>
+            <div class="categories">
+                <label for="income-category">Category:</label>
+                <select id="income-category">
+                    <option value="salary">Salary</option>
+                    <option value="investment">Investment</option>
+                    <option value="freelance">Freelancing</option>
+                </select>
+                <label for="income">Money In:</label>
+                <input type="number" id="income" name="income" />
+                <button type="button" id="addIncome">Add Income</button>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Expense</h2>
+            <div class="categories">
+                <label for="expense-category">Category:</label>
+                <select id="expense-category">
+                    <option value="rent">Rent</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other">Other</option>
+                </select>
+                <label for="expense">Money Out:</label>
+                <input type="number" id="expense" name="expense" step="0.01" />
+                <button type="button" id="addExpense">Add Expense</button>
+            </div>
+        </div>
+    </div>
+    <div class="totals">
+        <span>Total Income:</span>
+        <span id="total-income">₹0</span>
+    </div>
+    <div class="totals">
+        <span>Total Expense:</span>
+        <span id="total-expense">₹0</span>
+    </div>
+    <div class="totals">
+        <span>Balance:</span>
+        <span id="balance">₹0</span>
+    </div>
+
+    <!-- Previous Transactions Section -->
+    <div class="previous-transactions">
+        <h2>Previous Transactions</h2>
+        <div class="transaction-list">
+            <ul id="income-transaction-list">
+                <h3>Income (In)</h3>
+                <!-- Income transactions will appear here -->
+            </ul>
+            <ul id="expense-transaction-list">
+                <h3>Expense (Out)</h3>
+                <!-- Expense transactions will appear here -->
+            </ul>
+        </div>
+    </div>
+     <!-- Exit Message -->
+     <div class="exit-message glow">Visit again and spend time wisely with your financial wise "Xpense Wise" 👋</div>
+
+    <!-- Firebase Integration -->
+    <script type="module">
+        // Import Firebase functions
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD9ZnpzF0i43J9Srwq29TB-qBBSlvMVFhc",
+            authDomain: "xpense-wise.firebaseapp.com",
+            databaseURL: "https://xpense-wise-default-rtdb.firebaseio.com",
+            projectId: "xpense-wise",
+            storageBucket: "xpense-wise.appspot.com",
+            messagingSenderId: "59211648199",
+            appId: "1:59211648199:web:85a37dad582893104c82e2",
+            measurementId: "G-BSQ43QE0Z1"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Function to Update Balance
+        function updateBalance(totalIncome, totalExpense) {
+            const balance = document.getElementById('balance');
+            balance.innerText = '₹' + (totalIncome - totalExpense).toFixed(2);
+        }
+
+       // Add Income
+       document.getElementById('addIncome').addEventListener('click', () => {
+            const income = parseFloat(document.getElementById('income').value);
+            const category = document.getElementById('income-category').value;
+
+            if (!isNaN(income)) {
+                const incomeRef = ref(db, 'income');
+                const newIncomeRef = push(incomeRef);
+                push(newIncomeRef, {
+                    category,
+                    amount: income
+                });
+
+        alert("Transaction Successfully Added!");
+        }else {
+        alert("Please enter a valid income amount.");
+    }
+});
+       
+        // Add Expense
+        document.getElementById('addExpense').addEventListener('click', () => {
+        const expense = parseFloat(document.getElementById('expense').value);
+        const category = document.getElementById('expense-category').value;
+
+        if (!isNaN(expense)) {
+                const expenseRef = ref(db, 'expense');
+                const newExpenseRef = push(expenseRef);
+                push(newExpenseRef, {
+                    category,
+                    amount: expense
+                });
+
+        alert("Transaction Successfully Withdraw!");
+        }else {
+        alert("Please enter a valid expense amount.");
+    }
+});
+
+// Firebase Initialization and Data Fetch
+onValue(ref(db, 'transactions'), (snapshot) => {
+    const transactions = snapshot.val();
+    const incomeList = document.getElementById('income-transaction-list');
+    const expenseList = document.getElementById('expense-transaction-list');
+    incomeList.innerHTML = '<h3>Income (In)</h3>';
+    expenseList.innerHTML = '<h3>Expense (Out)</h3>';
+
+    let totalIncome = 0;
+    let totalExpense = 0;
+
+    for (let key in transactions) {
+        const transaction = transactions[key];
+        const listItem = `<li>${transaction.category}: ₹${transaction.amount.toFixed(2)}</li>`;
+
+        if (transaction.type === 'income') {
+            incomeList.insertAdjacentHTML('beforeend', listItem);
+            totalIncome += transaction.amount;
+        } else {
+            expenseList.insertAdjacentHTML('beforeend', listItem);
+            totalExpense += transaction.amount;
+        }
+    }
+
+    // Update the total income, expense, and balance
+    document.getElementById('total-income').innerText = '₹' + totalIncome.toFixed(2);
+    document.getElementById('total-expense').innerText = '₹' + totalExpense.toFixed(2);
+    updateBalance(totalIncome, totalExpense);
+ 
+     // Add visibility class after 1.5 seconds for the welcome message
+     setTimeout(() => {
+            document.querySelector('.welcome-message').classList.add('visible');
+        }, 1500);
+
+        // Fade out the exit message after 3 seconds (trigger when leaving or on interaction)
+        setTimeout(() => {
+            document.querySelector('.exit-message').classList.add('visible');
+        }, 1500);
+});
+
+    </script>
+</body>
+</html>
