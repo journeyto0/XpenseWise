@@ -329,14 +329,13 @@
 
         // Firebase Configuration 
         const firebaseConfig = {
-            apiKey: "AIzaSyDrogChOvG15SxmhcyB6jIp2RVb7eEkcoE",
-            authDomain: "xpense-wise-6f45d.firebaseapp.com",
-            databaseURL: "https://xpense-wise-6f45d-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "xpense-wise-6f45d",
-            storageBucket: "xpense-wise-6f45d.firebasestorage.app",
-            messagingSenderId: "307234653906",
-            appId: "1:307234653906:web:23418ee0d99089ded74f0b",
-            measurementId: "G-CMZQQ3GRW7"
+           apiKey: "AIzaSyBJqolB9FP0aNgdXE9lD4oB2Hyidm9Z-s8",
+            authDomain: "xpensewise-dfc68.firebaseapp.com",
+            projectId: "xpensewise-dfc68",
+            storageBucket: "xpensewise-dfc68.firebaseastorage.app",
+            messagingSenderId: "439860721790",
+            appId: "1:439860721790:web:af0bd8a046c357f38ec02f",
+            measurementId: "G-H7WS6CDBRS"
         };
 
         // Initialize Firebase
@@ -351,7 +350,7 @@
 
        // Add Income
        document.getElementById('addIncome').addEventListener('click', () => {
-            const income = parseFloat(document.getElementById('income').value);
+            const income = parseFloat(document.getElementById('incomeAmount').value);
             const category = document.getElementById('income-category').value;
 
             if (!isNaN(income)) {
@@ -430,4 +429,5 @@ onValue(ref(db, 'transactions'), (snapshot) => {
     </script>
 </body>
 </html>
+
 
